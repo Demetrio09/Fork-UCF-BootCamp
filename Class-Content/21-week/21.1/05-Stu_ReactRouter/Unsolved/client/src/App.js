@@ -3,7 +3,7 @@ import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 // The app will not render correctly until you setup a Route component.
 // Refer to the Basic Example documentation if you need to.
@@ -11,10 +11,23 @@ import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
-    <div>
-      <Nav />
-      <Books />
-    </div>
+      <div>
+        <Nav />
+        <Switch>
+          <Route exact path='/'>
+            <Books />
+          </Route>
+          <Route exact path='/books'>
+            <Redirect to='/' />
+          </Route>
+          <Route exact path='/books/:id'>
+            <Detail />
+          </Route>
+          <Route path='*'>
+            <NoMatch />
+          </Route>
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }
